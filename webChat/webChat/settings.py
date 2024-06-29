@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'webChat.wsgi.application'
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #         'NAME': 'webchat',
 #         'USER': 'postgres',
-#         'PASSWORD':'0311548621',
+#         'PASSWORD':'',
 #         'HOST':'localhost',
 #         'PORT':'5432',
 #     }
