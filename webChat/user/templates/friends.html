@@ -1,0 +1,9 @@
+{% extends 'main.html' %}
+{% block content %}
+
+{% for friend in friends %}
+<strong>{{friend.username}}</strong> <a href="{% url 'remove-friend' friend.id %}">Remove</a> <a
+    href="{% url 'message' friend.id %}">Send
+    Message</a> <br>
+{% endfor %}
+{% endblock content %}

@@ -1,0 +1,39 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .notification {
+        background-color: #f2f2f2;
+        padding: 20px;
+        margin: 10px;
+        border-radius: 5px;
+    }
+
+    .notification h3 {
+        margin-top: 0;
+    }
+</style>
+</head>
+
+<body>
+    {% if unread_messages %}
+    {% for unread_message in unread_messages %}
+    <a href="{% url 'message' unread_message.sender.id %}">
+        <div class="notification">
+            <h3>{{unread_message.sender.username}}</h3>
+            <p>{{unread_message.body}}</p>
+        </div>
+    </a>
+    {% endfor %}
+    {% else %}
+    <!-- <h3>No unread messages!</h3> -->
+    {% endif %}
+
+    <!-- Aici poți adăuga mai multe notificări folosind aceeași structură HTML -->
+</body>
+
+{% endblock content %}

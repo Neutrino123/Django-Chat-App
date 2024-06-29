@@ -1,0 +1,85 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        width: 80%;
+        margin: auto;
+        padding: 20px;
+    }
+
+    .message {
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+    }
+
+    .message.sender {
+        background-color: #DCF8C6;
+        text-align: right;
+    }
+
+    .message.receiver {
+        background-color: #E2E2E2;
+        text-align: left;
+    }
+
+    .message-form {
+        margin-top: 20px;
+    }
+
+    .message-form input[type="text"] {
+        width: 70%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .message-form input[type="submit"] {
+        padding: 10px 20px;
+        border: none;
+        background-color: #4CAF50;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+</style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Chat with {{friend.username}}</h2>
+        <div id="messages">
+            <!-- Aici vor fi afișate mesajele -->
+            <!-- Exemplu de mesaj trimis -->
+            {% for message in messages %}
+            {% if message.sender == request.user.profile %}
+            <div class="message sender">
+                <p>Eu: {{message.body}}</p>
+            </div>
+            {% elif message.sender == friend %}
+            <!-- Exemplu de mesaj primit -->
+
+            <div class="message receiver">
+                <p>{{friend.username}}: {{message.body}}</p>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <form id="messageForm" class="message-form" action="{% url 'send-message' friend.id %}" method="POST">
+            {% csrf_token %}
+
+            <input type="text" name="message" placeholder="Scrie un mesaj...">
+            <input type="submit" value="Trimite">
+        </form>
+    </div>
+</body>
+
+</html>
+
+{% endblock content %}

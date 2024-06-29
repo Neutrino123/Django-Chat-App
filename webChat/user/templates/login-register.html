@@ -1,0 +1,81 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+{% if page == "login" %}
+
+<div class="form-container">
+    <div class="form">
+        <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            <label for="username">Username:</label>
+            <input id="username" name="username" type="text" placeholder="Enter your username">
+            <label for="password">Password:</label>
+            <input id="password" name="password" type="password" placeholder="Enter your password">
+            <input name="submit" type="submit" value="Login">
+        </form>
+        <p>Don't have an account? <a href="{% url 'register' %}">SignUP</a></p>
+    </div>
+</div>
+{% else %}
+
+<div class="form-container">
+    <div class="form">
+        <form method="POST" action="{% url 'register' %}">
+            {% csrf_token %}
+            <!-- {% for field in form %}
+            <label>{{field.label}}</label>
+            {{field}}
+            {% endfor %} -->
+            {{form}}
+            <input value="SignUp" name="SignUp" type="submit" />
+        </form>
+
+    </div>
+</div>
+{% endif %}
+
+<style>
+    .form-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        /* Asigură-te că div-ul ocupă întreaga înălțime a ecranului */
+    }
+
+    .form {
+        width: 300px;
+        /* Lățimea formularului */
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .form label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form input[type="text"],
+    .form input[type="password"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        box-sizing: border-box;
+        /* Asigură-te că padding-ul nu mărește lățimea input-ului */
+    }
+
+    .form input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+</style>
+{% endblock content %}

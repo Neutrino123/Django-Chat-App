@@ -1,0 +1,60 @@
+<div class="meniu">
+    <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        {% if request.user.is_authenticated %}
+
+        {% if unread_messages %}
+        <li><a href="{% url 'notifications' %}">Notifications({{count}} new messages)</a></li>
+        {% else %}
+        <li><a href="{% url 'notifications' %}">Notifications</a></li>
+
+        {% endif %}
+        <li><a href="{% url 'my-profile' %}">MyProfile</a></li>
+        <li><a href="{% url 'friends' %}">Friends</a></li>
+        <li><a href="{% url 'friend-requests' %}">Friend Requests</a></li>
+        <li><a href="{% url 'searchPeople' %}">Search People</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+        <li><a href="{% url 'login' %}">Sign Up/Log In</a></li>
+        {% endif %}
+
+    </ul>
+</div>
+<style>
+    .meniu {
+        background-color: #333;
+        padding: 10px;
+
+    }
+
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+
+    li {
+        display: inline;
+        margin-right: 20px;
+    }
+
+
+    li a {
+        color: white;
+        text-decoration: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+
+
+    li a:hover {
+        background-color: #555;
+
+    }
+
+    li:last-child {
+        float: right;
+    }
+</style>

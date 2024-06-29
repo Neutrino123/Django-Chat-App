@@ -1,0 +1,116 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        /* Elimină marginile implicite ale corpului paginii */
+        padding: 0;
+        /* Elimină padding-ul implicite ale corpului paginii */
+    }
+
+    #search-form {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    #results {
+
+        margin-left: 43%;
+
+    }
+
+    .person {
+        border: 1px solid #ccc;
+        padding: 10px;
+        display: block;
+        margin: 10px;
+        margin-left: 10px;
+        max-width: 200px;
+        align-self: flex-start;
+
+    }
+
+    /* Stil pentru link-urile din listă */
+    #results a {
+        text-decoration: underline;
+        /* Face ca link-urile să fie întotdeauna subliniate */
+        color: blue;
+        /* Setează culoarea link-urilor la albastru */
+
+    }
+
+    /* 
+    #results .person:last-child {
+
+        margin-right: 90%;
+
+    } */
+</style>
+
+
+<body>
+    <h1 style="text-align: center;">Căutare Persoane</h1>
+    <form id="search-form" method="GET" action="{% url 'searchPeople' %}">
+        <input type="text" id="search-input" placeholder="Introduceți numele..." name="search_query"
+            value="{{search_query}}">
+        <input type="submit">
+    </form>
+    <ul id="results">
+        {% for profile in profiles %}
+        <p>
+            <li class="person">
+                <strong>{{ profile.username }}</strong>
+                {% if profile in request.user.profile.friends.all %}
+                <strong>-- Already friends</strong>
+                {% else %}
+                <a class="link" href="{% url 'send-friend-request' profile.id %}" data-search="{{search_query}}"
+                    data-id="{{profile.id}}">Add
+                    friend</a>
+                {% endif %}
+                {% for request in friendRequests %}
+                {% if profile == request.receiver %}
+                <strong>Request Sent</strong>
+                {% endif %}
+                {% endfor %}
+            </li>
+        </p>
+        {% endfor %}
+
+    </ul>
+</body>
+<script>
+
+    let searchForm = document.getElementById('search-form')
+    let pageLinks = document.getElementsByClassName('link')
+
+    for (let i = 0; i < pageLinks.length; i++) {
+
+        pageLinks[i].addEventListener('click', function (e) {
+
+            let search_query = this.dataset.search
+            let id = this.dataset.id
+
+            if (search_query) {
+                e.preventDefault()
+                let friendRequestURL = `http://127.0.0.1:8000/send-friend-request/${id}/`
+                fetch(friendRequestURL)
+                alert('friend added')
+                    .then(respone => {
+                        if (response.ok) {
+                            let url = `http://127.0.0.1:8000/search/?search_query=${search_query}/`
+                            window.location.href = url
+                        }
+                    })
+            }
+
+        })
+
+    }
+
+
+</script>
+
+
+{% endblock content %}
